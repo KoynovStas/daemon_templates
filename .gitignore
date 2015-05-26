@@ -30,6 +30,7 @@
 
 # Temp files
 *.*~
+*.pid
 
 
 
