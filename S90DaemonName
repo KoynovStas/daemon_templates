@@ -1,0 +1,48 @@
+#! /bin/sh
+
+DAEMONPATH=/usr/bin/
+DAEMON=daemon1
+
+
+
+d_start()
+{
+    cd $DAEMONPATH
+    ./$DAEMON
+}
+
+
+
+d_stop()
+{
+    killall  $DAEMON
+}
+
+
+
+case "$1" in
+      start)
+          echo -n "Starting $DAEMON: "
+          d_start
+          echo "done"
+          ;;
+      stop)
+          echo -n "Stopping $DAEMON: "
+          d_stop
+          echo "done"
+          ;;
+      restart)
+          echo -n "Restarting $DAEMON: "
+          d_stop
+          sleep 2
+          d_start
+          echo "done"
+          ;;
+      *)
+          echo "Usage: $0 {start|stop|restart}" >&2
+          exit 1
+          ;;
+esac
+
+
+exit 0
