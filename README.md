@@ -73,6 +73,14 @@ It's template 3 + Processing the command line by using the function getopt_long
 
 ***
 <br/>
+##### Template 5 (use our daemonize() function) [template_5](./template_5/)
+
+It's template 4 + DAEMON_CMD_PIPE (Management daemon via a control pipe using the function getopt_long)
+
+
+
+***
+<br/>
 ## License
 
 [BSD](./LICENSE).
