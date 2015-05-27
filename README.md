@@ -79,6 +79,67 @@ It's template 4 + DAEMON_CMD_PIPE (Management daemon via a control pipe using th
 
 
 
+<br/>
+## Testing
+
+
+
+##### Check that the daemon has no controlling terminal and is not a session leader
+
+The controlling terminal and session ID of a process can be inspected using the ps command:
+
+```console
+ps -o pid,sid,tty,cmd -C name_daemon
+```
+
+
+This should output a table of the form:
+
+```console
+PID   SID   TT       CMD
+29964 29961  ?      ./name_daemon
+```
+
+
+
+##### Check the current working directory
+
+Obtain the working directory pathname from /proc:
+
+```console
+ls -l /proc/PID_DAEMON/cwd
+```
+
+
+The working directory of the process is the target of the softlink:
+
+```console
+lrwxrwxrwx 1 root root 0 Feb  6 15:57 cwd -> /
+```
+
+
+
+#####  Check file descriptors
+
+The file descriptors of a running process can be inspected by looking in /proc:
+
+```console
+ls -l /proc/PID_DAEMON/fd
+```
+
+
+Each open descriptor is presented as a softlink. 
+If a descriptor is associated with a filesystem object then the target of the softlink is the pathname of the object. 
+For a daemon the output would typically be similar to:
+
+```console
+lrwx------ 1 root root 64 2011-02-08 06:40 0 -> /dev/null
+lrwx------ 1 root root 64 2011-02-08 06:40 1 -> /dev/null
+lrwx------ 1 root root 64 2011-02-08 06:40 2 -> /dev/null
+```
+
+
+
 ***
 <br/>
 ## License
