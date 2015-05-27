@@ -56,6 +56,14 @@ Implementing function **daemon()** in uClibc: [daemon.c](http://git.uclibc.org/u
 
 ***
 <br/>
+##### Template 3 (use our daemonize() function) [template_3](./template_3/)
+
+It's template 2 + function init_signals + daemon_exit_handler
+
+
+
+***
+<br/>
 ## License
 
 [BSD](./LICENSE).
