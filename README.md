@@ -17,6 +17,27 @@ rather than under the direct control of a user, waiting to be activated by the o
   * Redirect **stdin**, **stdout** and **stderr** to /dev/null (not redirect for DEBUG mode).
 
 
+***
+<br/>
+## Daemon templates for Linux
+
+##### Template 1 (uses  daemon() function from unistd.h) [template_1](./template_1/)
+
+**Advantages:**
+
+1. Very simple.
+
+
+**Disadvantages:**
+
+1. DEBUG mode not support.
+2. Don't create a PID file.
+
+
+See man-pages for **daemon()** function: [man 3 daemon()](http://man7.org/linux/man-pages/man3/daemon.3.html)
+
+Implementing function **daemon()** in uClibc: [daemon.c](http://git.uclibc.org/uClibc/tree/libc/unistd/daemon.c)
+
 
 ***
 <br/>
