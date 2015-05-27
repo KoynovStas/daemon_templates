@@ -41,6 +41,21 @@ Implementing function **daemon()** in uClibc: [daemon.c](http://git.uclibc.org/u
 
 ***
 <br/>
+##### Template 2 (use our daemonize() function) [template_2](./template_2/)
+
+**Advantages:**
+
+1. Full control (DEBUG mode).
+2. Create a PID file.
+
+
+**Disadvantages:**
+
+1. Many code.
+
+
+***
+<br/>
 ## License
 
 [BSD](./LICENSE).
