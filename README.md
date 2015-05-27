@@ -142,6 +142,22 @@ lrwx------ 1 root root 64 2011-02-08 06:40 2 -> /dev/null
 
 ***
 <br/>
+## Usage
+
+**To start working, perform the following steps:**
+
+* Choose the appropriate template.
+* Fix DAEMON_XXX variables in the Makefile.
+* Choose your compiler (or toolchain) in the Makefile (see variable $GCC).
+* Add your code in main loop and your source files in the project.
+* Achieve a clean build of the project (the complete absence of errors and warnings when you build the project).
+* Perform testing demon.
+* If you are using embedded Linux you can use the template start script [S90DaemonName](./S90DaemonName).
+
+
+
+***
+<br/>
 ## License
 
 [BSD](./LICENSE).
