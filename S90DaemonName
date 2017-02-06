@@ -1,7 +1,7 @@
 #! /bin/sh
 
 DAEMONPATH=/usr/bin/
-DAEMON=daemon1
+DAEMON=daemon_tmpl
 
 
 

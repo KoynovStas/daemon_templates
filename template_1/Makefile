@@ -1,4 +1,4 @@
-DAEMON_NAME  =  daemon1
+DAEMON_NAME  =  daemon_tmpl
 CFLAGS       = -DDAEMON_NAME='"$(DAEMON_NAME)"'
 CFLAGS      += -O2  -s  -Wall
 GCC          =  gcc
