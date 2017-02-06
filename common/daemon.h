@@ -1,5 +1,6 @@
-#ifndef DAEMON_HEADER
+﻿#ifndef DAEMON_HEADER
 #define DAEMON_HEADER
+
 
 
 

@@ -1,4 +1,4 @@
-#include <stdlib.h>
+﻿#include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <errno.h>
@@ -28,7 +28,7 @@
 
 
 
-static const char *short_opts = ":hv?";
+static const char *short_opts = "hv";
 static const char *help_str   = " ===============  Help  ===============\n"
                                 " Daemon name:  %s\n"
                                 " Daemon  ver:  %d.%d.%d\n"
@@ -43,6 +43,7 @@ static const char *help_str   = " ===============  Help  ===============\n"
 static const struct option long_opts[] = {
     { "version",      no_argument,       NULL, 'v' },
     { "help",         no_argument,       NULL, 'h' },
+
     { NULL,           no_argument,       NULL,  0  }
 };
 
@@ -127,12 +128,9 @@ void processing_cmd(int argc, char *argv[])
                         exit_if_not_daemonized(EXIT_SUCCESS);
                         break;
             case '?':
-                        printf("Unsupported option: -%c see help\n", optopt);
-                        exit_if_not_daemonized(EXIT_SUCCESS);
-                        break;
             case ':':
-                        printf("Option -%c requires an operand see help\n", optopt);
-                        exit_if_not_daemonized(EXIT_SUCCESS);
+                        printf("for more detail see help\n\n");
+                        exit_if_not_daemonized(EXIT_FAILURE);
                         break;
 
 
