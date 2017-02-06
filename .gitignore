@@ -15,35 +15,21 @@
 
 
 
-# Shared objects (inc. Windows DLLs)
-*.dll
+# Shared objects
 *.so
 *.so.*
-*.dylib
 
 
 
 # Binary files
-daemon1
-daemon2
-daemon3
-daemon4
-daemon5
+daemon_tmpl
 
 
 
 # Temp files
 *.*~
 *.pid
-
-
-
-# Configs for QT_Creator (I use QT_Creator as IDE)
-*.config
-*.creator
-*.creator.user
-*.files
-*.includes
+*.log
 
 
 
