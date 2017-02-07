@@ -28,6 +28,7 @@ static const char *help_str   = " ===============  Help  ===============\n"
                                 DAEMON_MODE_INFO
                                 " Build  time:  %s  %s\n\n"
                                 "Options:                      description:\n\n"
+                                "       --no_chdir             Don't change the directory to '/'\n"
                                 "       --pid_file [value]     Set pid file name\n"
                                 "       --log_file [value]     Set log file name\n"
                                 "  -v   --version              Display daemon version information\n"
@@ -38,8 +39,9 @@ static const char *help_str   = " ===============  Help  ===============\n"
 static const struct option long_opts[] = {
     { "version",      no_argument,       NULL, 'v' },
     { "help",         no_argument,       NULL, 'h' },
-    { "pid_file",     required_argument, NULL,  1  },
-    { "log_file",     required_argument, NULL,  2  },
+    { "no_chdir",     no_argument,       NULL,  1  },
+    { "pid_file",     required_argument, NULL,  3  },
+    { "log_file",     required_argument, NULL,  4  },
 
     { NULL,           no_argument,       NULL,  0  }
 };
@@ -120,11 +122,15 @@ void processing_cmd(int argc, char *argv[])
 //                      break;
 //                  }
 
-            case 1:     // --pid_file
+            case 1:     // --no_chdir
+                        daemon_param.no_chdir = 1;
+                        break;
+
+            case 3:     // --pid_file
                         daemon_param.pid_file = optarg;
                         break;
 
-            case 2:     // --log_file
+            case 4:     // --log_file
                         daemon_param.log_file = optarg;
                         break;
 
