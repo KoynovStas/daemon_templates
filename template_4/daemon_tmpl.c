@@ -28,6 +28,7 @@ static const char *help_str   = " ===============  Help  ===============\n"
                                 DAEMON_MODE_INFO
                                 " Build  time:  %s  %s\n\n"
                                 "Options:                      description:\n\n"
+                                "       --pid_file [value]     Set pid file name\n"
                                 "  -v   --version              Display daemon version information\n"
                                 "  -h,  --help                 Display this information\n\n";
 
@@ -36,6 +37,7 @@ static const char *help_str   = " ===============  Help  ===============\n"
 static const struct option long_opts[] = {
     { "version",      no_argument,       NULL, 'v' },
     { "help",         no_argument,       NULL, 'h' },
+    { "pid_file",     required_argument, NULL,  1  },
 
     { NULL,           no_argument,       NULL,  0  }
 };
@@ -111,12 +113,16 @@ void processing_cmd(int argc, char *argv[])
 
             case 0:     // long options
 
-
 //                  if( strcmp( "name_options", long_opts[long_index].name ) == 0 )
 //                  {
 //                      //Processing of "name_options"
 //                      break;
 //                  }
+
+            case 1:     // --pid_file
+                        daemon_param.pid_file = optarg;
+                        break;
+
 
             default:
                   break;
