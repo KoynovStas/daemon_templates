@@ -10,6 +10,7 @@
 #include <sys/file.h>
 
 
+#include "daemon.h"
 
 
 /*
@@ -39,9 +40,48 @@
 
 
 
-
-
 int daemonized = 0;
+
+
+
+
+struct daemon_param_t daemon_param =
+{
+
+    #ifdef  DAEMON_NO_CHDIR
+        .no_chdir = DAEMON_NO_CHDIR,
+    #else
+        .no_chdir = 0,
+    #endif
+
+
+    #ifdef  DAEMON_NO_CLOSE_STDIO
+        .no_close_stdio = DAEMON_NO_CLOSE_STDIO,
+    #else
+        .no_close_stdio = 0,
+    #endif
+
+
+    #ifdef  DAEMON_PID_FILE_NAME
+        .pid_file = DAEMON_PID_FILE_NAME,
+    #else
+        .pid_file = NULL,
+    #endif
+
+
+    #ifdef  DAEMON_LOG_FILE_NAME
+        .log_file = DAEMON_LOG_FILE_NAME,
+    #else
+        .log_file = NULL,
+    #endif
+
+
+    #ifdef  DAEMON_CMD_PIPE_NAME
+        .cmd_pipe = DAEMON_CMD_PIPE_NAME,
+    #else
+        .cmd_pipe = NULL,
+    #endif
+};
 
 
 
@@ -178,30 +218,21 @@ void daemonize(void)
 
 
 
-#if  ( DEBUG == 0) || ( DAEMON_NO_CHDIR == 0 )
     // Change the current working directory to "/"
     // This prevents the current directory from locked
     // The demon must always change the directory to "/"
-    // But in DEBUG mode can be defined DAEMON_NO_CHDIR == 1
-    // Then the director will not be changed !!!
-    if( chdir("/") != 0 )
+    if( !daemon_param.no_chdir && (chdir("/") != 0) )
         daemon_error_exit("Can't chdir: %m\n");
-#endif
 
 
 
-#ifdef  DAEMON_PID_FILE_NAME
-    if( create_pid_file(DAEMON_PID_FILE_NAME) == -1 )
-        daemon_error_exit("Can't create pid file: %s: %m\n", DAEMON_PID_FILE_NAME);
-#endif
+    if( daemon_param.pid_file && (create_pid_file(daemon_param.pid_file) == -1) )
+        daemon_error_exit("Can't create pid file: %s: %m\n", daemon_param.pid_file);
 
 
 
-#ifndef  DEBUG
-    // Redirect standard files to /dev/null
-    if( redirect_stdio_to_devnull() != 0 )
+    if( !daemon_param.no_close_stdio && (redirect_stdio_to_devnull() != 0) )
         daemon_error_exit("Can't redirect stdio to /dev/null: %m\n");
-#endif
 
 
 

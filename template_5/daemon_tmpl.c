@@ -1,4 +1,4 @@
-﻿#include <stdlib.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <errno.h>
@@ -60,15 +60,8 @@ void daemon_exit_handler(int sig)
     //Here we release resources
 
 
-#ifdef  DAEMON_PID_FILE_NAME
-    unlink(DAEMON_PID_FILE_NAME);
-#endif
-
-
-#ifdef  DAEMON_CMD_PIPE_NAME
-    unlink(DAEMON_CMD_PIPE_NAME);
-#endif
-
+    unlink(daemon_param.pid_file);
+    unlink(daemon_param.cmd_pipe);
 
     _exit(EXIT_FAILURE);
 }
@@ -166,7 +159,7 @@ void* cmd_pipe_thread(void *thread_arg)
 
 
     pthread_detach(pthread_self());
-    unlink(DAEMON_CMD_PIPE_NAME);
+    unlink(daemon_param.cmd_pipe);
 
 
     argv = (char **)malloc(PIPE_BUF*sizeof(char *));
@@ -179,11 +172,11 @@ void* cmd_pipe_thread(void *thread_arg)
         daemon_error_exit("Can't get mem for cmd_pipe_buf: %m\n");
 
 
-    if( mkfifo(DAEMON_CMD_PIPE_NAME, 0622) != 0 )
+    if( mkfifo(daemon_param.cmd_pipe, 0622) != 0 )
         daemon_error_exit("Can't create CMD_PIPE: %m\n");
 
 
-    fd = open(DAEMON_CMD_PIPE_NAME, O_RDWR);
+    fd = open(daemon_param.cmd_pipe, O_RDWR);
     if( fd == -1 )
         daemon_error_exit("Can't open CMD_PIPE: %m\n");
 

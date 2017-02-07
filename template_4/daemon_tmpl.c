@@ -1,4 +1,4 @@
-﻿#include <stdlib.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <errno.h>
@@ -50,10 +50,7 @@ void daemon_exit_handler(int sig)
     //Here we release resources
 
 
-#ifdef  DAEMON_PID_FILE_NAME
-    unlink(DAEMON_PID_FILE_NAME);
-#endif
-
+    unlink(daemon_param.pid_file);
 
     _exit(EXIT_FAILURE);
 }
