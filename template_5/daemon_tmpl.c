@@ -36,6 +36,7 @@ static const char *help_str   = " ===============  Help  ===============\n"
                                 " Build  time:  %s  %s\n\n"
                                 "Options:                      description:\n\n"
                                 "       --pid_file [value]     Set pid file name\n"
+                                "       --log_file [value]     Set log file name\n"
                                 "  -v   --version              Display daemon version information\n"
                                 "  -h,  --help                 Display this information\n\n";
 
@@ -45,6 +46,7 @@ static const struct option long_opts[] = {
     { "version",      no_argument,       NULL, 'v' },
     { "help",         no_argument,       NULL, 'h' },
     { "pid_file",     required_argument, NULL,  1  },
+    { "log_file",     required_argument, NULL,  2  },
 
     { NULL,           no_argument,       NULL,  0  }
 };
@@ -111,7 +113,6 @@ void processing_cmd(int argc, char *argv[])
         switch( opt )
         {
 
-
             case 'v':
                         printf("%s  version  %d.%d.%d\n", DAEMON_NAME, DAEMON_MAJOR_VERSION, DAEMON_MINOR_VERSION, DAEMON_PATCH_VERSION);
                         exit_if_not_daemonized(EXIT_SUCCESS);
@@ -122,12 +123,12 @@ void processing_cmd(int argc, char *argv[])
                         printf(help_str, DAEMON_NAME, DAEMON_MAJOR_VERSION, DAEMON_MINOR_VERSION, DAEMON_PATCH_VERSION, __DATE__, __TIME__);
                         exit_if_not_daemonized(EXIT_SUCCESS);
                         break;
+
             case '?':
             case ':':
                         printf("for more detail see help\n\n");
                         exit_if_not_daemonized(EXIT_FAILURE);
                         break;
-
 
             case 0:     // long options
 
@@ -141,6 +142,9 @@ void processing_cmd(int argc, char *argv[])
                         daemon_param.pid_file = optarg;
                         break;
 
+            case 2:     // --log_file
+                        daemon_param.log_file = optarg;
+                        break;
 
             default:
                   break;
