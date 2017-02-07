@@ -29,6 +29,7 @@ static const char *help_str   = " ===============  Help  ===============\n"
                                 " Build  time:  %s  %s\n\n"
                                 "Options:                      description:\n\n"
                                 "       --no_chdir             Don't change the directory to '/'\n"
+                                "       --no_close             Don't close standart IO files\n"
                                 "       --pid_file [value]     Set pid file name\n"
                                 "       --log_file [value]     Set log file name\n"
                                 "  -v   --version              Display daemon version information\n"
@@ -40,6 +41,7 @@ static const struct option long_opts[] = {
     { "version",      no_argument,       NULL, 'v' },
     { "help",         no_argument,       NULL, 'h' },
     { "no_chdir",     no_argument,       NULL,  1  },
+    { "no_close",     no_argument,       NULL,  2  },
     { "pid_file",     required_argument, NULL,  3  },
     { "log_file",     required_argument, NULL,  4  },
 
@@ -124,6 +126,10 @@ void processing_cmd(int argc, char *argv[])
 
             case 1:     // --no_chdir
                         daemon_param.no_chdir = 1;
+                        break;
+
+            case 2:     // --no_close
+                        daemon_param.no_close_stdio = 1;
                         break;
 
             case 3:     // --pid_file
