@@ -39,6 +39,7 @@ static const char *help_str   = " ===============  Help  ===============\n"
                                 "       --no_close             Don't close standart IO files\n"
                                 "       --pid_file [value]     Set pid file name\n"
                                 "       --log_file [value]     Set log file name\n"
+                                "       --cmd_pipe [value]     Set CMD Pipe name\n"
                                 "  -v   --version              Display daemon version information\n"
                                 "  -h,  --help                 Display this information\n\n";
 
@@ -51,6 +52,7 @@ static const struct option long_opts[] = {
     { "no_close",     no_argument,       NULL,  2  },
     { "pid_file",     required_argument, NULL,  3  },
     { "log_file",     required_argument, NULL,  4  },
+    { "cmd_pipe",     required_argument, NULL,  5  },
 
     { NULL,           no_argument,       NULL,  0  }
 };
@@ -156,6 +158,10 @@ void processing_cmd(int argc, char *argv[])
 
             case 4:     // --log_file
                         daemon_param.log_file = optarg;
+                        break;
+
+            case 5:     // --cmd_pipe
+                        daemon_param.cmd_pipe = optarg;
                         break;
 
             default:
