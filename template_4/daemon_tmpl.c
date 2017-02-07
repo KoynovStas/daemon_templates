@@ -13,20 +13,17 @@
 
 
 
-#ifdef  DEBUG
-        #define DAEMON_MODE_INFO   " Build  mode:  debug\n"
-#else
-        #define DAEMON_MODE_INFO   " Build  mode:  release\n"
-#endif
-
-
-
 static const char *short_opts = "hv";
 static const char *help_str   = " ===============  Help  ===============\n"
                                 " Daemon name:  %s\n"
                                 " Daemon  ver:  %d.%d.%d\n"
-                                DAEMON_MODE_INFO
-                                " Build  time:  %s  %s\n\n"
+#ifdef  DEBUG
+                                " Build  mode:  debug\n"
+#else
+                                " Build  mode:  release\n"
+#endif
+                                " Build  date:  "__DATE__"\n"
+                                " Build  time:  "__TIME__"\n\n"
                                 "Options:                      description:\n\n"
                                 "       --no_chdir             Don't change the directory to '/'\n"
                                 "       --no_close             Don't close standart IO files\n"
@@ -106,7 +103,7 @@ void processing_cmd(int argc, char *argv[])
 
             case 'h':
 
-                        printf(help_str, DAEMON_NAME, DAEMON_MAJOR_VERSION, DAEMON_MINOR_VERSION, DAEMON_PATCH_VERSION, __DATE__, __TIME__);
+                        printf(help_str, DAEMON_NAME, DAEMON_MAJOR_VERSION, DAEMON_MINOR_VERSION, DAEMON_PATCH_VERSION);
                         exit_if_not_daemonized(EXIT_SUCCESS);
                         break;
 
