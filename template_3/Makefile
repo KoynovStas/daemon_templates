@@ -43,9 +43,9 @@ all: clean  $(DAEMON_NAME)
 
 .PHONY: clean
 clean:
-	-@rm  *.o
-	-@rm  *.*~
-	-@rm  $(DAEMON_NAME)
+	-@rm -f *.o
+	-@rm -f *.*~
+	-@rm -f $(DAEMON_NAME)
 
 
 
