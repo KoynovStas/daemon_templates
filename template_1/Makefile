@@ -1,7 +1,20 @@
-DAEMON_NAME  =  daemon_tmpl
-CFLAGS       = -DDAEMON_NAME='"$(DAEMON_NAME)"'
-CFLAGS      += -O2  -s  -Wall
-GCC          =  gcc
+DAEMON_NAME           = daemon_tmpl
+DAEMON_MAJOR_VERSION  = 0
+DAEMON_MINOR_VERSION  = 0
+DAEMON_PATCH_VERSION  = 0
+DAEMON_NO_CHDIR       = 1
+DAEMON_NO_CLOSE_STDIO = 0
+
+
+
+CFLAGS   = -DDAEMON_NAME='"$(DAEMON_NAME)"'
+CFLAGS  += -DDAEMON_MAJOR_VERSION=$(DAEMON_MAJOR_VERSION)
+CFLAGS  += -DDAEMON_MINOR_VERSION=$(DAEMON_MINOR_VERSION)
+CFLAGS  += -DDAEMON_PATCH_VERSION=$(DAEMON_PATCH_VERSION)
+CFLAGS  += -DDAEMON_NO_CHDIR=$(DAEMON_NO_CHDIR)
+CFLAGS  += -DDAEMON_NO_CLOSE_STDIO=$(DAEMON_NO_CLOSE_STDIO)
+CFLAGS  += -O2  -s  -Wall
+GCC      =  gcc
 
 
 
@@ -22,13 +35,14 @@ clean:
 
 $(DAEMON_NAME):
 	$(GCC)  $@.c -o $@  $(CFLAGS)
-	@echo "  ---- Compiled $@ ----"
+	@echo "  ---- Compiled $@ ver $(DAEMON_MAJOR_VERSION).$(DAEMON_MINOR_VERSION).$(DAEMON_PATCH_VERSION) ----"
 	@echo ""
 
 
 
 .PHONY: debug
 debug: CFLAGS  += -DDEBUG
+debug: DAEMON_NO_CLOSE_STDIO = 1
 debug: all
 
 

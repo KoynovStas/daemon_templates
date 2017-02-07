@@ -10,7 +10,7 @@
 int main(void)
 {
 
-    if( daemon(0, 1) != 0 )
+    if( daemon(DAEMON_NO_CHDIR, DAEMON_NO_CLOSE_STDIO) != 0 )
         return EXIT_FAILURE;
 
 
