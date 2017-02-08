@@ -69,7 +69,7 @@ void init_signals(void)
 
     memset(&sa, 0, sizeof(sa));
     sa.sa_handler = daemon_exit_handler;
-    if( sigaction(SIGTERM, &sa, NULL) != 0)
+    if( sigaction(SIGTERM, &sa, NULL) != 0 )
         daemon_error_exit("Can't set daemon_exit_handler: %m\n");
 
 
@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
 
 
 
-    while(1)
+    while( !daemon_info.terminated )
     {
 
         // Here а routine of daemon

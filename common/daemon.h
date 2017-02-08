@@ -10,6 +10,7 @@
 struct daemon_info_t
 {
     //flags
+    unsigned int terminated     :1;
     unsigned int daemonized     :1;
     unsigned int no_chdir       :1;
     unsigned int no_close_stdio :1;

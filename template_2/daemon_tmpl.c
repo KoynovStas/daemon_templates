@@ -17,7 +17,7 @@ int main(void)
 
 
 
-    while(1)
+    while( !daemon_info.terminated )
     {
 
         // Here а routine of daemon

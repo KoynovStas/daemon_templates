@@ -44,6 +44,7 @@
 
 struct daemon_info_t daemon_info =
 {
+    .terminated = 0,
     .daemonized = 0,                   //flag will be set in finale function daemonize()
 
     #ifdef  DAEMON_NO_CHDIR
@@ -203,7 +204,7 @@ void daemonize(void)
 
 
 
-    // Create a new process group (SID) for the child process
+    // Create a new process group(session) (SID) for the child process
     if( setsid() == -1 )
         daemon_error_exit("Can't setsid: %m\n");
 
