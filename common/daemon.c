@@ -186,19 +186,12 @@ int create_pid_file(const char *pid_file_name)
 void daemonize(void)
 {
 
-    pid_t pid;
-
-
-    pid = fork();
-    if( pid == -1 )
-        daemon_error_exit("Can't fork: %m\n");
-
-
-
-    // If we got a good PID, then we can exit the parent process
-    if( pid > 0 )
-        _exit(EXIT_SUCCESS);
-
+    switch( fork() )                                     // Become background process
+    {
+        case -1:  daemon_error_exit("Can't fork: %m\n");
+        case  0:  break;                                 // child process (go next)
+        default:  _exit(EXIT_SUCCESS);                   // We can exit the parent process
+    }
 
 
     // ---- At this point we are executing as the child process ----
