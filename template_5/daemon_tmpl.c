@@ -67,8 +67,8 @@ void daemon_exit_handler(int sig)
     //Here we release resources
 
 
-    unlink(daemon_param.pid_file);
-    unlink(daemon_param.cmd_pipe);
+    unlink(daemon_info.pid_file);
+    unlink(daemon_info.cmd_pipe);
 
     _exit(EXIT_FAILURE);
 }
@@ -142,23 +142,23 @@ void processing_cmd(int argc, char *argv[])
 //                  }
 
             case 1:     // --no_chdir
-                        daemon_param.no_chdir = 1;
+                        daemon_info.no_chdir = 1;
                         break;
 
             case 2:     // --no_close
-                        daemon_param.no_close_stdio = 1;
+                        daemon_info.no_close_stdio = 1;
                         break;
 
             case 3:     // --pid_file
-                        daemon_param.pid_file = optarg;
+                        daemon_info.pid_file = optarg;
                         break;
 
             case 4:     // --log_file
-                        daemon_param.log_file = optarg;
+                        daemon_info.log_file = optarg;
                         break;
 
             case 5:     // --cmd_pipe
-                        daemon_param.cmd_pipe = optarg;
+                        daemon_info.cmd_pipe = optarg;
                         break;
 
             default:
@@ -183,7 +183,7 @@ void* cmd_pipe_thread(void *thread_arg)
 
 
     pthread_detach(pthread_self());
-    unlink(daemon_param.cmd_pipe);
+    unlink(daemon_info.cmd_pipe);
 
 
     argv = (char **)malloc(PIPE_BUF*sizeof(char *));
@@ -196,11 +196,11 @@ void* cmd_pipe_thread(void *thread_arg)
         daemon_error_exit("Can't get mem for cmd_pipe_buf: %m\n");
 
 
-    if( mkfifo(daemon_param.cmd_pipe, 0622) != 0 )
+    if( mkfifo(daemon_info.cmd_pipe, 0622) != 0 )
         daemon_error_exit("Can't create CMD_PIPE: %m\n");
 
 
-    fd = open(daemon_param.cmd_pipe, O_RDWR);
+    fd = open(daemon_info.cmd_pipe, O_RDWR);
     if( fd == -1 )
         daemon_error_exit("Can't open CMD_PIPE: %m\n");
 

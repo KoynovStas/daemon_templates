@@ -55,7 +55,7 @@ void daemon_exit_handler(int sig)
     //Here we release resources
 
 
-    unlink(daemon_param.pid_file);
+    unlink(daemon_info.pid_file);
 
     _exit(EXIT_FAILURE);
 }
@@ -122,19 +122,19 @@ void processing_cmd(int argc, char *argv[])
 //                  }
 
             case 1:     // --no_chdir
-                        daemon_param.no_chdir = 1;
+                        daemon_info.no_chdir = 1;
                         break;
 
             case 2:     // --no_close
-                        daemon_param.no_close_stdio = 1;
+                        daemon_info.no_close_stdio = 1;
                         break;
 
             case 3:     // --pid_file
-                        daemon_param.pid_file = optarg;
+                        daemon_info.pid_file = optarg;
                         break;
 
             case 4:     // --log_file
-                        daemon_param.log_file = optarg;
+                        daemon_info.log_file = optarg;
                         break;
 
             default:

@@ -9,7 +9,7 @@ extern int daemonized;
 
 
 
-struct daemon_param_t
+struct daemon_info_t
 {
     int no_chdir;
     int no_close_stdio;
@@ -20,7 +20,7 @@ struct daemon_param_t
 };
 
 
-extern struct daemon_param_t daemon_param;
+extern struct daemon_info_t daemon_info;
 
 
 

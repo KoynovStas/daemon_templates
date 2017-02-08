@@ -18,7 +18,7 @@ void daemon_exit_handler(int sig)
     //Here we release resources
 
 
-    unlink(daemon_param.pid_file);
+    unlink(daemon_info.pid_file);
 
     _exit(EXIT_FAILURE);
 }

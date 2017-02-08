@@ -45,7 +45,7 @@ int daemonized = 0;
 
 
 
-struct daemon_param_t daemon_param =
+struct daemon_info_t daemon_info =
 {
 
     #ifdef  DAEMON_NO_CHDIR
@@ -221,17 +221,17 @@ void daemonize(void)
     // Change the current working directory to "/"
     // This prevents the current directory from locked
     // The demon must always change the directory to "/"
-    if( !daemon_param.no_chdir && (chdir("/") != 0) )
+    if( !daemon_info.no_chdir && (chdir("/") != 0) )
         daemon_error_exit("Can't chdir: %m\n");
 
 
 
-    if( daemon_param.pid_file && (create_pid_file(daemon_param.pid_file) == -1) )
-        daemon_error_exit("Can't create pid file: %s: %m\n", daemon_param.pid_file);
+    if( daemon_info.pid_file && (create_pid_file(daemon_info.pid_file) == -1) )
+        daemon_error_exit("Can't create pid file: %s: %m\n", daemon_info.pid_file);
 
 
 
-    if( !daemon_param.no_close_stdio && (redirect_stdio_to_devnull() != 0) )
+    if( !daemon_info.no_close_stdio && (redirect_stdio_to_devnull() != 0) )
         daemon_error_exit("Can't redirect stdio to /dev/null: %m\n");
 
 
