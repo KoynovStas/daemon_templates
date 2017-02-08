@@ -5,14 +5,14 @@
 
 
 
-extern int daemonized;
-
 
 
 struct daemon_info_t
 {
-    int no_chdir;
-    int no_close_stdio;
+    //flags
+    unsigned int daemonized     :1;
+    unsigned int no_chdir       :1;
+    unsigned int no_close_stdio :1;
 
     const char *pid_file;
     const char *log_file;

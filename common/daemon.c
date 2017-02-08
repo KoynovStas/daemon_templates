@@ -13,6 +13,9 @@
 #include "daemon.h"
 
 
+
+
+
 /*
  *  How can I execute a new process from GNOME Terminal
  *  so that the child process's parent PID becomes 1 and not
@@ -34,19 +37,14 @@
  *  if( getppid() == 1 )
  *      return 1;        //already a daemon
  *
+ *  We uses our flag daemonized in daemon_info_t
  */
-
-
-
-
-
-int daemonized = 0;
-
 
 
 
 struct daemon_info_t daemon_info =
 {
+    .daemonized = 0,                   //flag will be set in finale function daemonize()
 
     #ifdef  DAEMON_NO_CHDIR
         .no_chdir = DAEMON_NO_CHDIR,
@@ -89,7 +87,7 @@ struct daemon_info_t daemon_info =
 
 void exit_if_not_daemonized(int exit_status)
 {
-    if( !daemonized )
+    if( !daemon_info.daemonized )
         _exit(exit_status);
 }
 
@@ -236,5 +234,5 @@ void daemonize(void)
 
 
 
-    daemonized = 1; //good job
+    daemon_info.daemonized = 1; //good job
 }
