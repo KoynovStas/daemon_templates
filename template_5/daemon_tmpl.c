@@ -136,13 +136,12 @@ void processing_cmd(int argc, char *argv[])
                         exit_if_not_daemonized(EXIT_FAILURE);
                         break;
 
-            case 0:     // long options
-
-//                  if( strcmp( "name_options", long_opts[long_index].name ) == 0 )
-//                  {
-//                      //Processing of "name_options"
-//                      break;
-//                  }
+//            case 0:     // long options
+//                        if( strcmp( "name_options", long_opts[long_index].name ) == 0 )
+//                        {
+//                            //Processing of "name_options"
+//                            break;
+//                        }
 
             case 1:     // --no_chdir
                         daemon_info.no_chdir = 1;
@@ -249,6 +248,9 @@ void init_daemon(int argc, char *argv[])
 
     if( pthread_create(&pthread_cmd_pipe, NULL, cmd_pipe_thread, NULL) != 0 )
        daemon_error_exit("Can't create thread_cmd_pipe: %m\n");
+
+
+    //Here is your code to initialize
 }
 
 

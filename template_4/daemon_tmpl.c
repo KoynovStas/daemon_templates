@@ -116,13 +116,12 @@ void processing_cmd(int argc, char *argv[])
                         exit_if_not_daemonized(EXIT_FAILURE);
                         break;
 
-            case 0:     // long options
-
-//                  if( strcmp( "name_options", long_opts[long_index].name ) == 0 )
-//                  {
-//                      //Processing of "name_options"
-//                      break;
-//                  }
+//            case 0:     // long options
+//                        if( strcmp( "name_options", long_opts[long_index].name ) == 0 )
+//                        {
+//                            //Processing of "name_options"
+//                            break;
+//                        }
 
             case 1:     // --no_chdir
                         daemon_info.no_chdir = 1;
@@ -151,12 +150,22 @@ void processing_cmd(int argc, char *argv[])
 
 
 
-int main(int argc, char *argv[])
+void init_daemon(int argc, char *argv[])
 {
 
     processing_cmd(argc, argv);
     daemonize();
     init_signals();
+
+    //Here is your code to initialize
+}
+
+
+
+int main(int argc, char *argv[])
+{
+
+    init_daemon(argc, argv);
 
 
 
