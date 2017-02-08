@@ -1,21 +1,22 @@
 #! /bin/sh
 
-DAEMONPATH=/usr/bin/
 DAEMON=daemon_tmpl
+DAEMON_PATH=.
+
+DAEMON_ARGS=""
 
 
 
 d_start()
 {
-    cd $DAEMONPATH
-    ./$DAEMON
+    $DAEMON_PATH/$DAEMON $DAEMON_ARGS
 }
 
 
 
 d_stop()
 {
-    killall  $DAEMON
+    killall $DAEMON
 }
 
 
@@ -39,10 +40,7 @@ case "$1" in
           echo "done"
           ;;
       *)
-          echo "Usage: $0 {start|stop|restart}" >&2
+          echo "Usage: $0 {start|stop|restart}"
           exit 1
           ;;
 esac
-
-
-exit 0
