@@ -13,7 +13,6 @@
 
 
 
-static const char *short_opts = "hv";
 static const char *help_str   = " ===============  Help  ===============\n"
                                 " Daemon name:  %s\n"
                                 " Daemon  ver:  %d.%d.%d\n"
@@ -34,7 +33,11 @@ static const char *help_str   = " ===============  Help  ===============\n"
 
 
 
-static const struct option long_opts[] = {
+static const char *short_opts = "hv";
+
+
+static const struct option long_opts[] =
+{
     { "version",      no_argument,       NULL, 'v' },
     { "help",         no_argument,       NULL, 'h' },
     { "no_chdir",     no_argument,       NULL,  1  },
