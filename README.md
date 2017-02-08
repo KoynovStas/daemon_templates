@@ -21,67 +21,33 @@ rather than under the direct control of a user, waiting to be activated by the o
 <br/>
 ## Daemon templates for Linux
 
-##### Template 1 (uses  daemon() function from unistd.h) [template_1](./template_1/)
 
-**Advantages:**
-
-1. Very simple.
-
-
-**Disadvantages:**
-
-1. DEBUG mode not support.
-2. Don't create a PID file.
-
-
-See man-pages for **daemon()** function: [man 3 daemon()](http://man7.org/linux/man-pages/man3/daemon.3.html)
-
-Implementing function **daemon()** in uClibc: [daemon.c](http://git.uclibc.org/uClibc/tree/libc/unistd/daemon.c)
-
-
-***
-<br/>
-##### Template 2 (use our daemonize() function) [template_2](./template_2/)
-
-**Advantages:**
-
-1. Full control (DEBUG mode).
-2. Create a PID file.
-
-
-**Disadvantages:**
-
-1. Many code.
+|Feature/template #| [1](./template_1/) | [2](./template_2/) | [3](./template_3/) | [4](./template_4/) | [5](./template_5/) |
+|------------------|--------------------|--------------------|--------------------|--------------------|--------------------|
+|no_chdir          |         +          |          +         |          +         |          +         |         +          |
+|no_close          |         +          |          +         |          +         |          +         |         +          |
+|LOG file          |         +          |          +         |          +         |          +         |         +          |
+|PID file          |         -          |          +         |          +         |          +         |         +          |
+|init_signals      |         -          |          -         |          +         |          +         |         +          |
+|support cmd       |         -          |          -         |          -         |          +         |         +          |
+|CMD Pipe          |         -          |          -         |          -         |          -         |         +          |
 
 
 
-***
-<br/>
-##### Template 3 (use our daemonize() function) [template_3](./template_3/)
+#### Note:
 
-It's template 2 + function init_signals + daemon_exit_handler
+[template_1](./template_1/) uses  daemon() function from unistd.h see man-pages for **daemon()** function: [man 3 daemon()](http://man7.org/linux/man-pages/man3/daemon.3.html)
 
+Example implementing function **daemon()** in uClibc: [daemon.c](http://git.uclibc.org/uClibc/tree/libc/unistd/daemon.c)
 
-
-***
-<br/>
-##### Template 4 (use our daemonize() function) [template_4](./template_4/)
-
-It's template 3 + Processing the command line by using the function getopt_long
+CMD PIPE - Management daemon via a control pipe using the function getopt_long
 
 
-
-***
-<br/>
-##### Template 5 (use our daemonize() function) [template_5](./template_5/)
-
-It's template 4 + DAEMON_CMD_PIPE (Management daemon via a control pipe using the function getopt_long)
 
 
 
 <br/>
 ## Testing
-
 
 
 ##### Check that the daemon has no controlling terminal and is not a session leader
@@ -177,7 +143,7 @@ lrwx------ 1 root root 64 2011-02-08 06:40 2 -> /dev/null
 * Add your code in main loop and your source files in the project.
 * Achieve a clean build of the project (the complete absence of errors and warnings when you build the project).
 * Perform testing demon.
-* If you are using embedded Linux you can use the template start script [S90DaemonName](./S90DaemonName).
+* If you are using embedded Linux you can use the template start [script](./scripts/)
 
 
 
