@@ -22,6 +22,12 @@ GCC      =  gcc
 
 
 
+SOURCES  = $(DAEMON_NAME).c
+
+
+
+
+
 .PHONY: all
 all: clean  $(DAEMON_NAME)
 
@@ -36,7 +42,7 @@ clean:
 
 
 $(DAEMON_NAME):
-	$(GCC)  $@.c -o $@  $(CFLAGS)
+	$(GCC)  $(SOURCES) -o $@  $(CFLAGS)
 	@echo "  ---- Compiled $@ ver $(DAEMON_MAJOR_VERSION).$(DAEMON_MINOR_VERSION).$(DAEMON_PATCH_VERSION) ----"
 	@echo ""
 
