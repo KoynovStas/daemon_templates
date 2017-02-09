@@ -37,7 +37,9 @@ void exit_if_not_daemonized(int exit_status);
 
 
 
-void daemonize(void);
+void daemonize2(void (*optional_init)(void *), void *data);
+
+static inline void daemonize() { daemonize2(NULL, NULL); }
 
 
 

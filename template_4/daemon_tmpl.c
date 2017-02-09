@@ -150,12 +150,10 @@ void processing_cmd(int argc, char *argv[])
 
 
 
-void init_daemon(int argc, char *argv[])
+void init(void *data)
 {
-
-    processing_cmd(argc, argv);
-    daemonize();
     init_signals();
+
 
     //Here is your code to initialize
 }
@@ -165,7 +163,8 @@ void init_daemon(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
 
-    init_daemon(argc, argv);
+    processing_cmd(argc, argv);
+    daemonize2(init, NULL);
 
 
 

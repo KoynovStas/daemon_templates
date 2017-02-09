@@ -238,11 +238,8 @@ void* cmd_pipe_thread(void *thread_arg)
 
 
 
-void init_daemon(int argc, char *argv[])
+void init(void *data)
 {
-
-    processing_cmd(argc, argv);
-    daemonize();
     init_signals();
 
 
@@ -258,7 +255,8 @@ void init_daemon(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
 
-    init_daemon(argc, argv);
+    processing_cmd(argc, argv);
+    daemonize2(init, NULL);
 
 
 

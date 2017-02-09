@@ -46,11 +46,20 @@ void init_signals(void)
 
 
 
+void init(void *data)
+{
+    init_signals();
+
+
+    //Here is your code to initialize
+}
+
+
+
 int main(void)
 {
 
-    daemonize();
-    init_signals();
+    daemonize2(init, NULL);
 
 
 

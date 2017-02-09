@@ -184,9 +184,8 @@ int create_pid_file(const char *pid_file_name)
 
 
 
-void daemonize(void)
+void daemonize2(void (*optional_init)(void *), void *data)
 {
-
     switch( fork() )                                     // Become background process
     {
         case -1:  daemon_error_exit("Can't fork: %m\n");
@@ -220,6 +219,13 @@ void daemonize(void)
 
     if( daemon_info.pid_file && (create_pid_file(daemon_info.pid_file) == -1) )
         daemon_error_exit("Can't create pid file: %s: %m\n", daemon_info.pid_file);
+
+
+
+    // call user functions for the optional initialization
+    // before closing the standardIO (STDIN, STDOUT, STDERR)
+    if( optional_init )
+        optional_init(data);
 
 
 
