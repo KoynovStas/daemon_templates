@@ -30,6 +30,7 @@ daemon_tmpl
 *.*~
 *.pid
 *.log
+*.depend
 
 
 
