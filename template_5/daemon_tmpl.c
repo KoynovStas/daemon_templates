@@ -20,24 +20,25 @@
 
 
 
-static const char *help_str   = " ===============  Help  ===============\n"
-                                " Daemon name:  %s\n"
-                                " Daemon  ver:  %d.%d.%d\n"
+static const char *help_str =
+        " ===============  Help  ===============\n"
+        " Daemon name:  %s\n"
+        " Daemon  ver:  %d.%d.%d\n"
 #ifdef  DEBUG
-                                " Build  mode:  debug\n"
+        " Build  mode:  debug\n"
 #else
-                                " Build  mode:  release\n"
+        " Build  mode:  release\n"
 #endif
-                                " Build  date:  "__DATE__"\n"
-                                " Build  time:  "__TIME__"\n\n"
-                                "Options:                      description:\n\n"
-                                "       --no_chdir             Don't change the directory to '/'\n"
-                                "       --no_close             Don't close standart IO files\n"
-                                "       --pid_file [value]     Set pid file name\n"
-                                "       --log_file [value]     Set log file name\n"
-                                "       --cmd_pipe [value]     Set CMD Pipe name\n"
-                                "  -v   --version              Display daemon version information\n"
-                                "  -h,  --help                 Display this information\n\n";
+        " Build  date:  "__DATE__"\n"
+        " Build  time:  "__TIME__"\n\n"
+        "Options:                      description:\n\n"
+        "       --no_chdir             Don't change the directory to '/'\n"
+        "       --no_close             Don't close standart IO files\n"
+        "       --pid_file [value]     Set pid file name\n"
+        "       --log_file [value]     Set log file name\n"
+        "       --cmd_pipe [value]     Set CMD Pipe name\n"
+        "  -v   --version              Display daemon version information\n"
+        "  -h,  --help                 Display this information\n\n";
 
 
 
@@ -120,13 +121,17 @@ void processing_cmd(int argc, char *argv[])
         {
 
             case 'v':
-                        printf("%s  version  %d.%d.%d\n", DAEMON_NAME, DAEMON_MAJOR_VERSION, DAEMON_MINOR_VERSION, DAEMON_PATCH_VERSION);
+                        printf("%s  version  %d.%d.%d\n", DAEMON_NAME, DAEMON_MAJOR_VERSION,
+                                                                       DAEMON_MINOR_VERSION,
+                                                                       DAEMON_PATCH_VERSION);
                         exit_if_not_daemonized(EXIT_SUCCESS);
                         break;
 
             case 'h':
 
-                        printf(help_str, DAEMON_NAME, DAEMON_MAJOR_VERSION, DAEMON_MINOR_VERSION, DAEMON_PATCH_VERSION);
+                        printf(help_str, DAEMON_NAME, DAEMON_MAJOR_VERSION,
+                                                      DAEMON_MINOR_VERSION,
+                                                      DAEMON_PATCH_VERSION);
                         exit_if_not_daemonized(EXIT_SUCCESS);
                         break;
 
