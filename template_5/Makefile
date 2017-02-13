@@ -23,14 +23,17 @@ CFLAGS    += -DDAEMON_NO_CHDIR=$(DAEMON_NO_CHDIR)
 CFLAGS    += -DDAEMON_NO_CLOSE_STDIO=$(DAEMON_NO_CLOSE_STDIO)
 
 CFLAGS    += -I$(COMMON_DIR)
-CFLAGS    += -O2  -s  -Wall  -lpthread
+CFLAGS    += -O2  -Wall  -pipe
+CFLAGS    += -lpthread
 
 GCC        =  gcc
 
 
 
 
-
+# Add your source files to the list.
+# Supported *.c  *.cpp  *.S files.
+# For other file types write a template rule for build, see below.
 SOURCES  = $(DAEMON_NAME).c         \
            $(COMMON_DIR)/daemon.c
 
@@ -38,30 +41,113 @@ SOURCES  = $(DAEMON_NAME).c         \
 
 
 
+OBJECTS  := $(patsubst %.c,  %.o, $(SOURCES) )
+OBJECTS  := $(patsubst %.cpp,%.o, $(OBJECTS) )
+OBJECTS  := $(patsubst %.S,  %.o, $(OBJECTS) )
+
+
+DEBUG_OBJECTS := $(patsubst %.o, %d.o, $(OBJECTS) )
+
+
+
+
 .PHONY: all
-all: clean  $(DAEMON_NAME)
+all: debug release
+
+
+
+.PHONY: release
+release: CFLAGS := -s  $(CFLAGS)
+release: $(DAEMON_NAME)
+
+
+
+.PHONY: debug
+debug: DAEMON_NO_CLOSE_STDIO = 1
+debug: CFLAGS := -DDEBUG  -g  $(CFLAGS)
+debug: $(DAEMON_NAME)d
+
+
+
+# release
+$(DAEMON_NAME): .depend $(OBJECTS)
+	$(call build_bin, $(OBJECTS))
+
+
+# debug
+$(DAEMON_NAME)d: .depend $(DEBUG_OBJECTS)
+	$(call build_bin, $(DEBUG_OBJECTS))
+
+
+
+# Build release objects
+%.o: %.c
+	$(build_object)
+
+
+%.o: %.cpp
+	$(build_object)
+
+
+%.o: %.S
+	$(build_object)
+
+
+
+# Build debug objects
+%d.o: %.c
+	$(build_object)
+
+
+%d.o: %.cpp
+	$(build_object)
+
+
+%d.o: %.S
+	$(build_object)
 
 
 
 .PHONY: clean
 clean:
-	-@rm -f *.o
-	-@rm -f *.*~
 	-@rm -f $(DAEMON_NAME)
+	-@rm -f $(DAEMON_NAME)d
+	-@rm -f $(OBJECTS)
+	-@rm -f $(DEBUG_OBJECTS)
+	-@rm -f .depend
+	-@rm -f *.*~
 
 
 
-$(DAEMON_NAME):
-	$(GCC)  $(SOURCES) -o $@  $(CFLAGS)
-	@echo "  ---- Compiled $@ ver $(DAEMON_MAJOR_VERSION).$(DAEMON_MINOR_VERSION).$(DAEMON_PATCH_VERSION) ----"
-	@echo ""
+
+.depend: cmd  = echo "  [depend]  $(var)" &&
+.depend: cmd += $(GCC) $(CFLAGS) -MT ".depend $(basename $(var)).o $(basename $(var))d.o"  -MM $(var) >> .depend;
+.depend: $(SOURCES)
+	@rm -f .depend
+	@echo "Generating dependencies..."
+	@$(foreach var, $(SOURCES), $(cmd))
+
+
+include $(wildcard .depend)
 
 
 
-.PHONY: debug
-debug: CFLAGS  += -DDEBUG
-debug: DAEMON_NO_CLOSE_STDIO = 1
-debug: all
+
+# Common commands
+BUILD_ECHO = echo "\n  [build]  $@:"
+
+
+define build_object
+    @$(BUILD_ECHO)
+    $(GCC) -c $< -o $@  $(CFLAGS)
+endef
+
+
+define build_bin
+    @$(BUILD_ECHO)
+    $(GCC)  $1 -o $@  $(CFLAGS)
+    @echo "\n---- Compiled $@ ver $(DAEMON_MAJOR_VERSION).$(DAEMON_MINOR_VERSION).$(DAEMON_PATCH_VERSION) ----\n"
+endef
 
 
 
@@ -69,8 +155,9 @@ debug: all
 help:
 	@echo "make [command]"
 	@echo "command is:"
-	@echo "   clean   -  remove all binary files"
-	@echo "   all     -  clean and build daemon"
+	@echo "   all     -  build daemon in release and debug mode"
 	@echo "   debug   -  build in debug mode (#define DEBUG 1)"
-	@echo "   help    -  This help"
+	@echo "   release -  build in release mode (strip)"
+	@echo "   clean   -  remove all generated files"
+	@echo "   help    -  this help"
 
