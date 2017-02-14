@@ -16,9 +16,9 @@ CFLAGS  += -DDAEMON_LOG_FILE_NAME='"$(DAEMON_LOG_FILE_NAME)"'
 CFLAGS  += -DDAEMON_NO_CHDIR=$(DAEMON_NO_CHDIR)
 CFLAGS  += -DDAEMON_NO_CLOSE_STDIO=$(DAEMON_NO_CLOSE_STDIO)
 
-CFLAGS    += -O2  -s  -Wall  -pipe
+CFLAGS  += -O2  -Wall  -pipe
 
-GCC        =  gcc
+GCC      =  gcc
 
 
 

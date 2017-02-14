@@ -21,7 +21,7 @@ CFLAGS    += -DDAEMON_NO_CHDIR=$(DAEMON_NO_CHDIR)
 CFLAGS    += -DDAEMON_NO_CLOSE_STDIO=$(DAEMON_NO_CLOSE_STDIO)
 
 CFLAGS    += -I$(COMMON_DIR)
-CFLAGS    += -O2  -s  -Wall  -pipe
+CFLAGS    += -O2  -Wall  -pipe
 
 GCC        =  gcc
 
