@@ -43,7 +43,9 @@ OBJECTS  := $(patsubst %.cpp,%.o, $(OBJECTS) )
 OBJECTS  := $(patsubst %.S,  %.o, $(OBJECTS) )
 
 
-DEBUG_OBJECTS := $(patsubst %.o, %d.o, $(OBJECTS) )
+DEBUG_SUFFIX   = debug
+
+DEBUG_OBJECTS := $(patsubst %.o, %_$(DEBUG_SUFFIX).o, $(OBJECTS) )
 
 
 
@@ -62,7 +64,7 @@ release: $(DAEMON_NAME)
 .PHONY: debug
 debug: DAEMON_NO_CLOSE_STDIO = 1
 debug: CFLAGS := -DDEBUG  -g  $(CFLAGS)
-debug: $(DAEMON_NAME)d
+debug: $(DAEMON_NAME)_$(DEBUG_SUFFIX)
 
 
 
@@ -72,7 +74,7 @@ $(DAEMON_NAME): .depend $(OBJECTS)
 
 
 # debug
-$(DAEMON_NAME)d: .depend $(DEBUG_OBJECTS)
+$(DAEMON_NAME)_$(DEBUG_SUFFIX): .depend $(DEBUG_OBJECTS)
 	$(call build_bin, $(DEBUG_OBJECTS))
 
 
@@ -92,15 +94,15 @@ $(DAEMON_NAME)d: .depend $(DEBUG_OBJECTS)
 
 
 # Build debug objects
-%d.o: %.c
+%_$(DEBUG_SUFFIX).o: %.c
 	$(build_object)
 
 
-%d.o: %.cpp
+%_$(DEBUG_SUFFIX).o: %.cpp
 	$(build_object)
 
 
-%d.o: %.S
+%_$(DEBUG_SUFFIX).o: %.S
 	$(build_object)
 
 
@@ -108,7 +110,7 @@ $(DAEMON_NAME)d: .depend $(DEBUG_OBJECTS)
 .PHONY: clean
 clean:
 	-@rm -f $(DAEMON_NAME)
-	-@rm -f $(DAEMON_NAME)d
+	-@rm -f $(DAEMON_NAME)_$(DEBUG_SUFFIX)
 	-@rm -f $(OBJECTS)
 	-@rm -f $(DEBUG_OBJECTS)
 	-@rm -f .depend
@@ -118,7 +120,7 @@ clean:
 
 
 .depend: cmd  = echo "  [depend]  $(var)" &&
-.depend: cmd += $(GCC) $(CFLAGS) -MT ".depend $(basename $(var)).o $(basename $(var))d.o"  -MM $(var) >> .depend;
+.depend: cmd += $(GCC) $(CFLAGS) -MT ".depend $(basename $(var)).o $(basename $(var))_$(DEBUG_SUFFIX).o"  -MM $(var) >> .depend;
 .depend: $(SOURCES)
 	@rm -f .depend
 	@echo "Generating dependencies..."
