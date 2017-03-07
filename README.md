@@ -10,11 +10,11 @@ rather than under the direct control of a user, waiting to be activated by the o
 **The standard procedure for daemonize a process has a few steps:**
 
   * **Fork**, allowing the parent process to terminate.
-  * Set the umask to zero (reset umask).
-  * Open any logs for writing (optional).
-  * Start a new session for the daemon by calling **setsid()**.
+  * Set the **umask** to zero (reset umask).
+  * Open any **logs** for writing (optional).
+  * Start a new session for the daemon by calling `setsid()`.
   * Change the current working directory to a safe location (default: **"/"**).
-  * Redirect **stdin**, **stdout** and **stderr** to /dev/null (not redirect for DEBUG mode).
+  * Redirect `stdin`, `stdout` and `stderr` to **/dev/null** (not redirect for `DEBUG` mode).
 
 
 ***
@@ -36,14 +36,29 @@ rather than under the direct control of a user, waiting to be activated by the o
 
 #### Note:
 
-[template_1](./template_1/) uses  daemon() function from unistd.h see man-pages for **daemon()** function: [man 3 daemon()](http://man7.org/linux/man-pages/man3/daemon.3.html)
+[template_1](./template_1/) uses  `daemon()` function from **unistd.h** see man-pages for `daemon()` function: [man 3 daemon()](http://man7.org/linux/man-pages/man3/daemon.3.html)
 
-Example implementing function **daemon()** in uClibc: [daemon.c](http://git.uclibc.org/uClibc/tree/libc/unistd/daemon.c)
+Example implementing function `daemon()` in uClibc: [daemon.c](http://git.uclibc.org/uClibc/tree/libc/unistd/daemon.c)
 
-CMD PIPE - Management daemon via a control pipe using the function getopt_long
+CMD PIPE - Management daemon via a control pipe using the function `getopt_long`
 
 
 
+***
+<br/>
+## Usage
+
+**To start working, perform the following steps:**
+
+* Choose the appropriate template.
+* Correct the `DAEMON_XXX` variables in the **Makefile**.
+* Choose your compiler (or toolchain) in the **Makefile** (see variable `$GCC`).
+* Add your source files to the list (see `SOURCES` variable in **Makefile**)
+* Add your code to main loop.
+* Add your initialization code in the function `init` (optional)
+* Achieve a clean build for the project (the complete absence of errors and warnings when you build the project).
+* Perform testing demon.
+* If you are using embedded Linux you can use the template start [script](./scripts/)
 
 
 <br/>
@@ -130,27 +145,11 @@ lrwx------ 1 root root 64 2011-02-08 06:40 2 -> /dev/null
 ```
 
 
-
-***
-<br/>
-## Usage
-
-**To start working, perform the following steps:**
-
-* Choose the appropriate template.
-* Correct the DAEMON_XXX variables in the Makefile.
-* Choose your compiler (or toolchain) in the Makefile (see variable $GCC).
-* Add your source files to the list (see SOURCES variable in Makefile)
-* Add your code to main loop.
-* Add your initialization code in the function init (optional)
-* Achieve a clean build for the project (the complete absence of errors and warnings when you build the project).
-* Perform testing demon.
-* If you are using embedded Linux you can use the template start [script](./scripts/)
-
-
-
-***
 <br/>
 ## License
 
-[BSD](./LICENSE).
+[BSD-3-Clause](./LICENSE).
+
+
+## Copyright
+Copyright (C) 2015 Koynov Stas - skojnov@yandex.ru
