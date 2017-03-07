@@ -23,7 +23,7 @@
 
 # Binary files
 daemon_tmpl
-daemon_tmpld
+daemon_tmpl_debug
 
 
 
