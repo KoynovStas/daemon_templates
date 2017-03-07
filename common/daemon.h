@@ -5,8 +5,6 @@
 
 
 
-
-
 struct daemon_info_t
 {
     //flags
@@ -21,7 +19,7 @@ struct daemon_info_t
 };
 
 
-extern struct daemon_info_t daemon_info;
+extern volatile struct daemon_info_t daemon_info;
 
 
 

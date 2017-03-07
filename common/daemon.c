@@ -42,7 +42,7 @@
 
 
 
-struct daemon_info_t daemon_info =
+volatile struct daemon_info_t daemon_info =
 {
     .terminated = 0,
     .daemonized = 0,                   //flag will be set in finale function daemonize()
