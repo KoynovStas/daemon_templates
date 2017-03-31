@@ -18,7 +18,7 @@ rather than under the direct control of a user, waiting to be activated by the o
 
 
 ***
-<br/>
+
 ## Daemon templates for Linux
 
 
@@ -45,7 +45,7 @@ CMD PIPE - Management daemon via a control pipe using the function `getopt_long`
 
 
 ***
-<br/>
+
 ## Usage
 
 **To start working, perform the following steps:**
@@ -61,7 +61,7 @@ CMD PIPE - Management daemon via a control pipe using the function `getopt_long`
 * If you are using embedded Linux you can use the template start [script](./scripts/)
 
 
-<br/>
+
 ## Testing
 
 
@@ -145,7 +145,7 @@ lrwx------ 1 root root 64 2011-02-08 06:40 2 -> /dev/null
 ```
 
 
-<br/>
+
 ## License
 
 [BSD-3-Clause](./LICENSE).
