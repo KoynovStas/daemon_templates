@@ -42,20 +42,38 @@ static const char *help_str =
 
 
 
+// indexes for long_opt function
+enum
+{
+    cmd_opt_help    = 'h',
+    cmd_opt_version = 'v',
+
+    //daemon options
+    cmd_opt_no_chdir,
+    cmd_opt_no_close,
+    cmd_opt_pid_file,
+    cmd_opt_log_file,
+    cmd_opt_cmd_pipe
+};
+
+
+
 static const char *short_opts = "hv";
 
 
 static const struct option long_opts[] =
 {
-    { "version",      no_argument,       NULL, 'v' },
-    { "help",         no_argument,       NULL, 'h' },
-    { "no_chdir",     no_argument,       NULL,  1  },
-    { "no_close",     no_argument,       NULL,  2  },
-    { "pid_file",     required_argument, NULL,  3  },
-    { "log_file",     required_argument, NULL,  4  },
-    { "cmd_pipe",     required_argument, NULL,  5  },
+    { "version",      no_argument,       NULL, cmd_opt_version  },
+    { "help",         no_argument,       NULL, cmd_opt_help     },
 
-    { NULL,           no_argument,       NULL,  0  }
+    //daemon options
+    { "no_chdir",     no_argument,       NULL, cmd_opt_no_chdir },
+    { "no_close",     no_argument,       NULL, cmd_opt_no_close },
+    { "pid_file",     required_argument, NULL, cmd_opt_pid_file },
+    { "log_file",     required_argument, NULL, cmd_opt_log_file },
+    { "cmd_pipe",     required_argument, NULL, cmd_opt_cmd_pipe },
+
+    { NULL,           no_argument,       NULL,  0 }
 };
 
 
@@ -120,61 +138,50 @@ void processing_cmd(int argc, char *argv[])
         switch( opt )
         {
 
-            case 'v':
-                        printf("%s  version  %d.%d.%d\n", DAEMON_NAME, DAEMON_MAJOR_VERSION,
-                                                                       DAEMON_MINOR_VERSION,
-                                                                       DAEMON_PATCH_VERSION);
-                        exit_if_not_daemonized(EXIT_SUCCESS);
-                        break;
-
-            case 'h':
-
+            case cmd_opt_help:
                         printf(help_str, DAEMON_NAME, DAEMON_MAJOR_VERSION,
                                                       DAEMON_MINOR_VERSION,
                                                       DAEMON_PATCH_VERSION);
                         exit_if_not_daemonized(EXIT_SUCCESS);
                         break;
 
-            case '?':
-            case ':':
-                        printf("for more detail see help\n\n");
-                        exit_if_not_daemonized(EXIT_FAILURE);
+            case cmd_opt_version:
+                        printf("%s  version  %d.%d.%d\n", DAEMON_NAME, DAEMON_MAJOR_VERSION,
+                                                                       DAEMON_MINOR_VERSION,
+                                                                       DAEMON_PATCH_VERSION);
+                        exit_if_not_daemonized(EXIT_SUCCESS);
                         break;
 
-//            case 0:     // long options
-//                        if( strcmp( "name_options", long_opts[long_index].name ) == 0 )
-//                        {
-//                            //Processing of "name_options"
-//                            break;
-//                        }
 
-            case 1:     // --no_chdir
+                 //daemon options
+            case cmd_opt_no_chdir:
                         daemon_info.no_chdir = 1;
                         break;
 
-            case 2:     // --no_close
+            case cmd_opt_no_close:
                         daemon_info.no_close_stdio = 1;
                         break;
 
-            case 3:     // --pid_file
+            case cmd_opt_pid_file:
                         daemon_info.pid_file = optarg;
                         break;
 
-            case 4:     // --log_file
+            case cmd_opt_log_file:
                         daemon_info.log_file = optarg;
                         break;
 
-            case 5:     // --cmd_pipe
+            case cmd_opt_cmd_pipe:
                         daemon_info.cmd_pipe = optarg;
                         break;
 
             default:
-                  break;
+                        printf("for more detail see help\n\n");
+                        exit_if_not_daemonized(EXIT_FAILURE);
+                        break;
         }
 
         opt = getopt_long(argc, argv, short_opts, long_opts, &long_index);
     }
-
 }
 
 
