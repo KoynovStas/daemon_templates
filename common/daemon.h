@@ -41,6 +41,22 @@
 
 
 
+#define DAEMON_DEF_TO_STR_(text) #text
+#define DAEMON_DEF_TO_STR(arg) DAEMON_DEF_TO_STR_(arg)
+
+
+#define DAEMON_MAJOR_VERSION_STR  DAEMON_DEF_TO_STR(DAEMON_MAJOR_VERSION)
+#define DAEMON_MINOR_VERSION_STR  DAEMON_DEF_TO_STR(DAEMON_MINOR_VERSION)
+#define DAEMON_PATCH_VERSION_STR  DAEMON_DEF_TO_STR(DAEMON_PATCH_VERSION)
+
+#define DAEMON_VERSION_STR  DAEMON_MAJOR_VERSION_STR "." \
+                            DAEMON_MINOR_VERSION_STR "." \
+                            DAEMON_PATCH_VERSION_STR
+
+
+
+
+
 struct daemon_info_t
 {
     //flags
