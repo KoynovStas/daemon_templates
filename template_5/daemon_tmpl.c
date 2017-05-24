@@ -22,8 +22,8 @@
 
 static const char *help_str =
         " ===============  Help  ===============\n"
-        " Daemon name:  %s\n"
-        " Daemon  ver:  %d.%d.%d\n"
+        " Daemon name:  " DAEMON_NAME          "\n"
+        " Daemon  ver:  " DAEMON_VERSION_STR   "\n"
 #ifdef  DEBUG
         " Build  mode:  debug\n"
 #else
@@ -121,7 +121,7 @@ void init_signals(void)
 void processing_cmd(int argc, char *argv[])
 {
 
-    int opt, long_index;
+    int opt;
 
 
     // We use the processing_cmd function for processing the command line and
@@ -132,23 +132,18 @@ void processing_cmd(int argc, char *argv[])
 
 
 
-    opt = getopt_long(argc, argv, short_opts, long_opts, &long_index);
-    while( opt != -1 )
+    while( (opt = getopt_long(argc, argv, short_opts, long_opts, NULL)) != -1 )
     {
         switch( opt )
         {
 
             case cmd_opt_help:
-                        printf(help_str, DAEMON_NAME, DAEMON_MAJOR_VERSION,
-                                                      DAEMON_MINOR_VERSION,
-                                                      DAEMON_PATCH_VERSION);
+                        puts(help_str);
                         exit_if_not_daemonized(EXIT_SUCCESS);
                         break;
 
             case cmd_opt_version:
-                        printf("%s  version  %d.%d.%d\n", DAEMON_NAME, DAEMON_MAJOR_VERSION,
-                                                                       DAEMON_MINOR_VERSION,
-                                                                       DAEMON_PATCH_VERSION);
+                        puts(DAEMON_NAME "  version  " DAEMON_VERSION_STR "\n");
                         exit_if_not_daemonized(EXIT_SUCCESS);
                         break;
 
@@ -175,12 +170,10 @@ void processing_cmd(int argc, char *argv[])
                         break;
 
             default:
-                        printf("for more detail see help\n\n");
+                        puts("for more detail see help\n\n");
                         exit_if_not_daemonized(EXIT_FAILURE);
                         break;
         }
-
-        opt = getopt_long(argc, argv, short_opts, long_opts, &long_index);
     }
 }
 
