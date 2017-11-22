@@ -12,9 +12,7 @@
 
 int main(void)
 {
-
     daemonize();
-
 
 
     while( !daemon_info.terminated )
@@ -25,7 +23,6 @@ int main(void)
         printf("%s: daemon is run\n", DAEMON_NAME);
         sleep(10);
     }
-
 
 
     return EXIT_SUCCESS; // good job (we interrupted (finished) main loop)

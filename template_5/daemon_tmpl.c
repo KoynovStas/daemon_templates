@@ -99,7 +99,6 @@ void daemon_exit_handler(int sig)
 
 void init_signals(void)
 {
-
     struct sigaction sa;
 
     memset(&sa, 0, sizeof(sa));
@@ -120,16 +119,13 @@ void init_signals(void)
 
 void processing_cmd(int argc, char *argv[])
 {
-
     int opt;
-
 
     // We use the processing_cmd function for processing the command line and
     // for commands from the DAEMON_CMD_PIPE_NAME
     // For this we use the getopt_long function several times
     // to work properly, we must reset the optind
     optind = 0;
-
 
 
     while( (opt = getopt_long(argc, argv, short_opts, long_opts, NULL)) != -1 )
@@ -259,10 +255,8 @@ void init(void *data)
 
 int main(int argc, char *argv[])
 {
-
     processing_cmd(argc, argv);
     daemonize2(init, NULL);
-
 
 
     while( !daemon_info.terminated )
@@ -273,7 +267,6 @@ int main(int argc, char *argv[])
         printf("%s: daemon is run\n", DAEMON_NAME);
         sleep(10);
     }
-
 
 
     return EXIT_SUCCESS; // good job (we interrupted (finished) main loop)

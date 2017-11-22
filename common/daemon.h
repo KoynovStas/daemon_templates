@@ -43,6 +43,9 @@
 #define DAEMON_HEADER
 
 
+#include <stddef.h>  //for NULL
+
+
 
 
 

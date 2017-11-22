@@ -27,7 +27,6 @@ void daemon_exit_handler(int sig)
 
 void init_signals(void)
 {
-
     struct sigaction sa;
 
     memset(&sa, 0, sizeof(sa));
@@ -58,9 +57,7 @@ void init(void *data)
 
 int main(void)
 {
-
     daemonize2(init, NULL);
-
 
 
     while( !daemon_info.terminated )
@@ -71,7 +68,6 @@ int main(void)
         printf("%s: daemon is run\n", DAEMON_NAME);
         sleep(10);
     }
-
 
 
     return EXIT_SUCCESS; // good job (we interrupted (finished) main loop)

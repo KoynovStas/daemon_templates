@@ -14,7 +14,6 @@ int main(void)
         return EXIT_FAILURE;
 
 
-
     while(1)
     {
 
@@ -23,7 +22,6 @@ int main(void)
         printf("%s: daemon is run\n", DAEMON_NAME);
         sleep(10);
     }
-
 
 
     return EXIT_SUCCESS; // good job (we interrupted (finished) main loop)
