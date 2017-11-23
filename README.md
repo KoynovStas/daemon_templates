@@ -1,4 +1,4 @@
-# My daemon templates for Linux
+# Daemon templates for Linux
 
 [![Version](https://img.shields.io/github/release/KoynovStas/daemon_templates.svg?style=plastic)](https://github.com/KoynovStas/daemon_templates/releases)
 
@@ -22,6 +22,9 @@ rather than under the direct control of a user, waiting to be activated by the o
 ***
 
 ## Daemon templates for Linux
+
+
+I wrote various versions of demons for C/C++. From the simplest (which uses the standard `daemon()` function) to the daemon, with support for command-line options and `CMD_PIPE` for controlling the daemon from the command line.
 
 
 |Feature/template #| [1](./template_1/) | [2](./template_2/) | [3](./template_3/) | [4](./template_4/) | [5](./template_5/) |
