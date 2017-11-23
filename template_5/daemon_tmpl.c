@@ -37,8 +37,8 @@ static const char *help_str =
         "       --pid_file [value]     Set pid file name\n"
         "       --log_file [value]     Set log file name\n"
         "       --cmd_pipe [value]     Set CMD Pipe name\n"
-        "  -v   --version              Display daemon version information\n"
-        "  -h,  --help                 Display this information\n\n";
+        "  -v,  --version              Display daemon version\n"
+        "  -h,  --help                 Display this help\n\n";
 
 
 
