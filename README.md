@@ -1,5 +1,7 @@
 # My daemon templates for Linux
 
+[![Version](https://img.shields.io/github/release/KoynovStas/daemon_templates.svg?style=plastic)](https://github.com/KoynovStas/daemon_templates/releases)
+
 
 ## Description
 
