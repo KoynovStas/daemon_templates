@@ -88,10 +88,18 @@ volatile struct daemon_info_t daemon_info =
     .terminated = 0,
     .daemonized = 0,                   //flag will be set in finale function daemonize()
 
+
     #ifdef  DAEMON_NO_CHDIR
         .no_chdir = DAEMON_NO_CHDIR,
     #else
         .no_chdir = 0,
+    #endif
+
+
+    #ifdef  DAEMON_NO_FORK
+        .no_fork = DAEMON_NO_FORK,
+    #else
+        .no_fork = 0,
     #endif
 
 
@@ -225,7 +233,7 @@ int create_pid_file(const char *pid_file_name)
 
 
 
-void daemonize2(void (*optional_init)(void *), void *data)
+static void do_fork()
 {
     switch( fork() )                                     // Become background process
     {
@@ -234,20 +242,25 @@ void daemonize2(void (*optional_init)(void *), void *data)
         default:  _exit(EXIT_SUCCESS);                   // We can exit the parent process
     }
 
-
     // ---- At this point we are executing as the child process ----
+}
 
+
+
+void daemonize2(void (*optional_init)(void *), void *data)
+{
+    if( !daemon_info.no_fork )
+        do_fork();
 
 
     // Reset the file mode mask
     umask(0);
 
 
-
     // Create a new process group(session) (SID) for the child process
-    if( setsid() == -1 )
+    // call setsid() only if fork is done
+    if( !daemon_info.no_fork && (setsid() == -1) )
         daemon_error_exit("Can't setsid: %m\n");
-
 
 
     // Change the current working directory to "/"
@@ -257,10 +270,8 @@ void daemonize2(void (*optional_init)(void *), void *data)
         daemon_error_exit("Can't chdir: %m\n");
 
 
-
     if( daemon_info.pid_file && (create_pid_file(daemon_info.pid_file) == -1) )
         daemon_error_exit("Can't create pid file: %s: %m\n", daemon_info.pid_file);
-
 
 
     // call user functions for the optional initialization
@@ -269,10 +280,8 @@ void daemonize2(void (*optional_init)(void *), void *data)
         optional_init(data);
 
 
-
     if( !daemon_info.no_close_stdio && (redirect_stdio_to_devnull() != 0) )
         daemon_error_exit("Can't redirect stdio to /dev/null: %m\n");
-
 
 
     daemon_info.daemonized = 1; //good job

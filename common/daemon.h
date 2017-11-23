@@ -71,6 +71,7 @@ struct daemon_info_t
     unsigned int terminated     :1;
     unsigned int daemonized     :1;
     unsigned int no_chdir       :1;
+    unsigned int no_fork        :1;
     unsigned int no_close_stdio :1;
 
     const char *pid_file;

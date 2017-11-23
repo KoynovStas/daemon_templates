@@ -26,6 +26,7 @@ static const char *help_str =
         " Build  time:  " __TIME__ "\n\n"
         "Options:                      description:\n\n"
         "       --no_chdir             Don't change the directory to '/'\n"
+        "       --no_fork              Don't do fork\n"
         "       --no_close             Don't close standart IO files\n"
         "       --pid_file [value]     Set pid file name\n"
         "       --log_file [value]     Set log file name\n"
@@ -42,6 +43,7 @@ enum
 
     //daemon options
     cmd_opt_no_chdir,
+    cmd_opt_no_fork,
     cmd_opt_no_close,
     cmd_opt_pid_file,
     cmd_opt_log_file
@@ -59,6 +61,7 @@ static const struct option long_opts[] =
 
     //daemon options
     { "no_chdir",     no_argument,       NULL, cmd_opt_no_chdir },
+    { "no_fork",      no_argument,       NULL, cmd_opt_no_fork  },
     { "no_close",     no_argument,       NULL, cmd_opt_no_close },
     { "pid_file",     required_argument, NULL, cmd_opt_pid_file },
     { "log_file",     required_argument, NULL, cmd_opt_log_file },
@@ -126,6 +129,10 @@ void processing_cmd(int argc, char *argv[])
                  //daemon options
             case cmd_opt_no_chdir:
                         daemon_info.no_chdir = 1;
+                        break;
+
+            case cmd_opt_no_fork:
+                        daemon_info.no_fork = 1;
                         break;
 
             case cmd_opt_no_close:
