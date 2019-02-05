@@ -28,7 +28,7 @@ CFLAGS    += -I$(COMMON_DIR)
 CFLAGS    += -O2  -Wall  -pipe
 CFLAGS    += -lpthread
 
-GCC        =  gcc
+GCC       ?=  gcc
 
 
 
@@ -164,4 +164,3 @@ help:
 	@echo "   release -  build in release mode (strip)"
 	@echo "   clean   -  remove all generated files"
 	@echo "   help    -  this help"
-

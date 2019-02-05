@@ -18,7 +18,7 @@ CFLAGS  += -DDAEMON_NO_CLOSE_STDIO=$(DAEMON_NO_CLOSE_STDIO)
 
 CFLAGS  += -O2  -Wall  -pipe
 
-GCC      =  gcc
+GCC     ?=  gcc
 
 
 
@@ -153,4 +153,3 @@ help:
 	@echo "   release -  build in release mode (strip)"
 	@echo "   clean   -  remove all generated files"
 	@echo "   help    -  this help"
-
