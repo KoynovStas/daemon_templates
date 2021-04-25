@@ -28,7 +28,7 @@ CFLAGS    += -I$(COMMON_DIR)
 CFLAGS    += -O2  -Wall  -pipe
 CFLAGS    += -lpthread
 
-GCC       ?=  gcc
+CC        ?=  gcc
 
 
 
@@ -129,7 +129,7 @@ clean:
 	@echo "Generating dependencies..."
 	@for src in $(SOURCES) ; do  \
         echo "  [depend]  $$src" ; \
-        $(GCC) $(CFLAGS) -MT ".depend $${src%.*}.o $${src%.*}_$(DEBUG_SUFFIX).o" -MM $$src >> .depend ; \
+        $(CC) $(CFLAGS) -MT ".depend $${src%.*}.o $${src%.*}_$(DEBUG_SUFFIX).o" -MM $$src >> .depend ; \
     done
 
 
@@ -146,13 +146,13 @@ BUILD_ECHO = echo "\n  [build]  $@:"
 
 define build_object
     @$(BUILD_ECHO)
-    $(GCC) -c $< -o $@  $(CFLAGS)
+    $(CC) -c $< -o $@  $(CFLAGS)
 endef
 
 
 define build_bin
     @$(BUILD_ECHO)
-    $(GCC)  $1 -o $@  $(CFLAGS)
+    $(CC)  $1 -o $@  $(CFLAGS)
     @echo "\n---- Compiled $@ ver $(DAEMON_MAJOR_VERSION).$(DAEMON_MINOR_VERSION).$(DAEMON_PATCH_VERSION) ----\n"
 endef
 
