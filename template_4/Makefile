@@ -1,12 +1,36 @@
 DAEMON_NAME           = daemon_tmpl
 DAEMON_MAJOR_VERSION  = 0
 DAEMON_MINOR_VERSION  = 0
-DAEMON_PATCH_VERSION  = 0
+DAEMON_PATCH_VERSION  = *hash
+#variants:  hash - set PATCH_VERSION == commit hash (12 digits)
+#variants: *hash - set PATCH_VERSION == * + commit hash (12 digits),
+#                  * will be set if files in repo are changed
+#variants:  xxx  - set PATCH_VERSION == xxx (your variant)
+
 DAEMON_PID_FILE_NAME  = $(DAEMON_NAME).pid
 DAEMON_LOG_FILE_NAME  = $(DAEMON_NAME).log
 DAEMON_NO_CHDIR       = 1
 DAEMON_NO_FORK        = 0
 DAEMON_NO_CLOSE_STDIO = 0
+
+
+# process PATCH_VERSION
+COMMIT_HASH    = $(shell git rev-parse --short=12 HEAD)
+CHANGED_FILES  = $(shell git status --short --untracked-files=no | grep -c M)
+
+
+ifeq ($(strip $(DAEMON_PATCH_VERSION)), *hash)
+    ifeq ($(strip $(CHANGED_FILES)), 0)
+        DAEMON_PATCH_VERSION = $(COMMIT_HASH)
+    else
+        DAEMON_PATCH_VERSION = *$(COMMIT_HASH)
+    endif
+endif
+
+
+ifeq ($(strip $(DAEMON_PATCH_VERSION)), hash)
+    DAEMON_PATCH_VERSION = $(COMMIT_HASH)
+endif
 
 
 
@@ -21,6 +45,8 @@ CFLAGS    += -DDAEMON_LOG_FILE_NAME='"$(DAEMON_LOG_FILE_NAME)"'
 CFLAGS    += -DDAEMON_NO_CHDIR=$(DAEMON_NO_CHDIR)
 CFLAGS    += -DDAEMON_NO_FORK=$(DAEMON_NO_FORK)
 CFLAGS    += -DDAEMON_NO_CLOSE_STDIO=$(DAEMON_NO_CLOSE_STDIO)
+CFLAGS    += -DCOMMIT_HASH='"$(COMMIT_HASH)"'
+CFLAGS    += -DCHANGED_FILES=$(CHANGED_FILES)
 
 CFLAGS    += -I$(COMMON_DIR)
 CFLAGS    += -O2  -Wall  -pipe
