@@ -57,7 +57,7 @@ CMD PIPE - Management daemon via a control pipe using the function `getopt_long`
 
 * Choose the appropriate template.
 * Correct the `DAEMON_XXX` variables in the **Makefile**.
-* Choose your compiler (or toolchain) in the **Makefile** (see variable `$GCC`).
+* Choose your compiler (or toolchain) in the **Makefile** (see variable `$CC`).
 * Add your source files to the list (see `SOURCES` variable in **Makefile**)
 * Add your code to main loop.
 * Add your initialization code in the function `init` (optional)
